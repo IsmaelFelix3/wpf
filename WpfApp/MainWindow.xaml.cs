@@ -25,16 +25,18 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Variables Globales
         object oMissing = System.Reflection.Missing.Value;
-        object oEndOfDoc = "\\endofdoc"; /* \endofdoc is a predefined bookmark */
+        object oEndOfDoc = "\\endofdoc";
 
         Word._Application oWord;
         Word._Document oDoc;
 
-        string name,lastname, email, picture;
+        string name, email, picture;
 
         private void CloseDoc_Click(object sender, RoutedEventArgs e)
         {
+            //Se cierra documento word
             oWord.Quit();
         }
 
@@ -45,6 +47,7 @@ namespace WpfApp
 
         private void CreateDoc_Click(object sender, RoutedEventArgs e)
         {
+            //Se crea documento word
             oWord = new Word.Application();
             oWord.Visible = true;
         }
@@ -53,7 +56,6 @@ namespace WpfApp
         {
 
             Persona.Persona personas = new Persona.Persona();
-
             
             var baseUrl = "https://dummyapi.io/data/api/user?limit=10";
 
@@ -61,6 +63,7 @@ namespace WpfApp
 
             using (var httpClient = new HttpClient())
             {
+                //Se hace la peticion al servicio
 
                 using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, baseUrl))
                 {
@@ -71,71 +74,61 @@ namespace WpfApp
 
                     personas = JsonSerializer.Deserialize<Persona.Persona>(contenido, jsonSerializerOptions);
                 }
-
                 
+                //Documento Word
                     oDoc = oWord.Documents.Add(ref oMissing, ref oMissing,
                     ref oMissing, ref oMissing);
 
-                    //Insert a 4 x 3 table, fill it with data, and make the first row
-                    //bold and italic.
                     Word.Table oTable;
                     Word.Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
                     oTable = oDoc.Tables.Add(wrdRng, 4, 3, ref oMissing, ref oMissing);
                     oTable.Range.ParagraphFormat.SpaceAfter = 6;
                     int r, c;
 
-                    int index = 0;
-                    
+                    //Se crea la tabla en word y se insertan los datos de las personas en las celdas
+                    int index = 0;                    
+
                     for(r = 1; r <= 4; r++)
                     {
                         for(c = 1; c <= 3; c++)
                         {
+                            var rng = oWord.Selection.Range;
 
-                        Word.Cell cell = this.oWord.ActiveDocument.Tables[1].Cell(r, c);
+                            name = $"{personas.Data[index].FirstName.ToString()}" + " " + $"{personas.Data[index].LastName.ToString()}";
+                            email = personas.Data[index].Email.ToString();
+                            picture = personas.Data[index].Picture.ToString();
 
-                        cell.Range.Text = "Name";
-                        cell.Range.ParagraphFormat.Alignment =
-                            Word.WdParagraphAlignment.wdAlignParagraphRight;
-                        cell.Range.Text = "Name2";
-                        cell.Range.ParagraphFormat.Alignment =
-                            Word.WdParagraphAlignment.wdAlignParagraphRight;
+                            oTable.Cell(r, c).Range.InlineShapes.AddPictureBullet(picture);
 
-                        //oTable.Cell(r,c).Range.InlineShapes.AddPicture(personas.Data[index].Picture.ToString());
-                        // Word.Paragraph oPara;
-                        //oTable.Spacing = 10;
-                        //oTable.Range.InsertParagraphAfter();
-                        //oTable.Cell(r,c).Range.Text = $"{personas.Data[index].FirstName.ToString()}" +" "+
-                        // $"{personas.Data[index].LastName.ToString()} {personas.Data[index].Email.ToString()}";
+                            oTable.Cell(r, c).Range.InsertParagraphAfter();
+                            oTable.Cell(r, c).Range.InsertAfter(name);
 
-                        //object o_CollapseEnd = Word.WdCollapseDirection.wdCollapseEnd;
-                        //Word.Range imgrng = oDoc.Content;
-                        //imgrng.Collapse(ref o_CollapseEnd);
-                        //imgrng.InlineShapes.AddPicture(personas.Data[index].Picture.ToString(), oMissing, oMissing, imgrng);
+                            while (rng.Find.Execute(name))
+                            {
+                                rng.Font.Bold = 1;
+                            }
+                                                     
+                            oTable.Cell(r, c).Range.InsertParagraphAfter();
+                            oTable.Cell(r, c).Range.InsertAfter(email);
 
-                        //var pic = oDoc.Shapes.AddPicture(personas.Data[index].Picture.ToString());                
+                            while (rng.Find.Execute(email))
+                            {
+                                rng.Font.Italic = 1;
 
-                        //pic.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapBehind;
+                            }
 
-                        //oTable.Cell(r,c).Range.InlineShapes.AddPicture(personas.Data[index].Picture.ToString());                   
-                        //oTable.Cell(r,c).Range.Text = $" {personas.Data[index].FirstName.ToString()}" +" "+
-                        //$"{personas.Data[index].LastName.ToString()} {personas.Data[index].Email.ToString()}";
+                            oTable.Cell(r, c).Width = 148;
+                            oTable.Cell(r, c).Height = 80;                                                                                 
 
-
-                        oTable.Cell(r, c).Width = 100;
-                        oTable.Cell(r, c).Height = 100;
-
-                        if (index == 9)
+                            if (index == 9)
                             {
                                 break;
                             }
-                            index++;
 
-                      
+                            index++;                               
                         }
                     }
-                oTable.Rows[1].Range.Font.Bold = 1;
-                oTable.Rows[1].Range.Font.Italic = 1;
-
+                //Se crean bordes de tabla
                 oTable.Borders.InsideLineStyle = Microsoft.Office.Interop.Word.WdLineStyle.wdLineStyleSingle;
                 oTable.Borders.OutsideLineStyle = Microsoft.Office.Interop.Word.WdLineStyle.wdLineStyleSingle;
                 oTable.AllowAutoFit = true;

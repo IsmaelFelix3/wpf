@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="Project" Height="500" Width="800">
-    <Grid Height="500">
-        <Button Name="CreateDoc" Content="Create Doc" Width="160" Height="40" Margin="107,210,533,250" Click="CreateDoc_Click" Background="#FFBBB6B6"></Button>
-        <Button Name="CreateContentDoc" Content="Create Document Content" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" Width="160" Height="40" Background="#FFB2AFAF" Click="CreateContentDoc_Click"/>
-        <Button Name="CloseDoc" Content="Close Word" HorizontalAlignment="Left" Margin="552,210,0,0" VerticalAlignment="Top" Background="#FFB8B3B3" Width="160" Height="40" Click="CloseDoc_Click"/>
-
+        Title="Project" Height="300" Width="800">
+    <Grid Background="#FF6D739C" Height="300">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="143*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+        <Button Name="CreateDoc" Content="Create Doc" Height="40" Margin="90,133,458,127" Click="CreateDoc_Click" Background="#FFBBB6B6"/>
+        <Button Name="CreateContentDoc" Content="Create Document Content" HorizontalAlignment="Left" Margin="310,133,0,0" VerticalAlignment="Top" Width="160" Height="40" Background="#FFB2AFAF" Click="CreateContentDoc_Click"/>
+        <Button Name="CloseDoc" Content="Close Word" HorizontalAlignment="Left" Margin="538,133,0,0" VerticalAlignment="Top" Background="#FFB8B3B3" Width="160" Height="40" Click="CloseDoc_Click"/>
     </Grid>
 
 </Window>

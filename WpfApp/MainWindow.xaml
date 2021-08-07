@@ -1,0 +1,16 @@
+﻿<Window x:Name="Project" x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp"
+        mc:Ignorable="d"
+        Title="Project" Height="500" Width="800">
+    <Grid Height="500">
+        <Button Name="CreateDoc" Content="Create Doc" Width="160" Height="40" Margin="107,210,533,250" Click="CreateDoc_Click" Background="#FFBBB6B6"></Button>
+        <Button Name="CreateContentDoc" Content="Create Document Content" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" Width="160" Height="40" Background="#FFB2AFAF" Click="CreateContentDoc_Click"/>
+        <Button Name="CloseDoc" Content="Close Word" HorizontalAlignment="Left" Margin="552,210,0,0" VerticalAlignment="Top" Background="#FFB8B3B3" Width="160" Height="40" Click="CloseDoc_Click"/>
+
+    </Grid>
+
+</Window>

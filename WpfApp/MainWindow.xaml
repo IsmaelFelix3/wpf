@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Title="Project" Height="300" Width="800">
-    <Grid Background="#FF6D739C" Height="300">
+    <Grid Background="#FFA2A7CD" Height="300">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="143*"/>
             <ColumnDefinition Width="17*"/>
         </Grid.ColumnDefinitions>
-        <Button Name="CreateDoc" Content="Create Doc" Height="40" Margin="90,133,458,127" Click="CreateDoc_Click" Background="#FFBBB6B6"/>
-        <Button Name="CreateContentDoc" Content="Create Document Content" HorizontalAlignment="Left" Margin="310,133,0,0" VerticalAlignment="Top" Width="160" Height="40" Background="#FFB2AFAF" Click="CreateContentDoc_Click"/>
-        <Button Name="CloseDoc" Content="Close Word" HorizontalAlignment="Left" Margin="538,133,0,0" VerticalAlignment="Top" Background="#FFB8B3B3" Width="160" Height="40" Click="CloseDoc_Click"/>
+        <Button Name="CreateDoc" Content="Create Word Document" Height="40" Margin="90,133,458,127" Click="CreateDoc_Click" Background="White" BorderBrush="#FF727070"/>
+        <Button Name="CreateContentDoc" Content="Create Document Content" HorizontalAlignment="Left" Margin="310,133,0,0" VerticalAlignment="Top" Width="160" Height="40" Background="White" Click="CreateContentDoc_Click"/>
+        <Button Name="CloseDoc" Content="Close Word" HorizontalAlignment="Left" Margin="538,133,0,0" VerticalAlignment="Top" Background="White" Width="160" Height="40" Click="CloseDoc_Click"/>
     </Grid>
 
 </Window>
